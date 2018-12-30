@@ -2,6 +2,7 @@
 
 const unsigned short int icon_size   = 60;
 
+
 bool show_menu_textures(Texture menu_background, Texture welcome_texture,
 Texture start_texture ,Texture play_texture,
 Texture  sound_texture, Texture  no_sound_texture,
@@ -58,7 +59,8 @@ bool menu()
       if ( SBDL::mouseInRect( music_rect ) ) music_state = !music_state;
     }
 
-    show_menu_textures(menu_background, welcome_texture,
+    show_menu_textures(
+    menu_background, welcome_texture,
     start_texture, play_texture,
     sound_texture, no_sound_texture,
     music_texture , no_music_texture );
