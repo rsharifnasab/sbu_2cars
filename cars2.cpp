@@ -96,6 +96,27 @@ bool delay_handle(int start_time)
     return true;
 }
 
+bool score_handle()
+{
+  const unsigned int ms_max = 200;
+  static long int milisec = 0;
+  milisec++;
+  if(milisec > ms_max)
+  {
+    milisec %= ms_max;
+    score++;
+    if (score > high_score)
+    {
+      high_score = score;
+      std::ofstream myfile;
+      myfile.open ("high_score.txt");
+      myfile << high_score << "\n";
+      myfile.close();
+    }
+  }
+  return true;
+}
+
 int main()
 {
   init();
@@ -105,7 +126,7 @@ int main()
   while( SBDL::isRunning() )
   {
     unsigned int start_time = SBDL::getTime();
-
+    score_handle();
     make_game_harder();
 
     SBDL::updateEvents();
