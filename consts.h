@@ -15,4 +15,7 @@ bool sound_state = true;
 
 int car_r_x[] = { screen_width * 5/8  - icon_size/2 , screen_width * 7/8 - icon_size/2 };
 int car_l_x[] = { screen_width * 1/8  - icon_size/2,  screen_width * 3/8 - icon_size/2 };
+
+bool car_r_pos = true;
+bool car_l_pos = true;
  
