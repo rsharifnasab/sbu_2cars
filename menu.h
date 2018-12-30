@@ -1,9 +1,4 @@
 
-#include <string>
-
-const unsigned short int icon_size   = 60;
-
-
 bool show_menu_textures(Texture menu_background, Texture welcome_texture,
 Texture start_texture ,Texture play_texture,
 Texture  sound_texture, Texture  no_sound_texture,
