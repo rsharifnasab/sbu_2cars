@@ -457,7 +457,7 @@ namespace SBDL {
 	*/
 	Music *loadMusic(const std::string &path) {
 		Music *music;
-		music = Mix_LoadMUS(path.c_str());
+		music = Mix_LoadMUS(path.c_str()); // look TODO
 		if (!music) {
 			const std::string message = "Unable to load: " + path;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "SBDL load music error", message.c_str(), nullptr);

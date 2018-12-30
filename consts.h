@@ -3,7 +3,7 @@ const unsigned int delay_time = 1000 / FPS;
 
 const unsigned int screen_width = 500;
 const unsigned int screen_height = 800;
-const int max_car_height = screen_height * 0.63;
+const int max_car_height = screen_height * 0.73;
 
 const unsigned short int icon_size   = 60;
 
@@ -18,4 +18,8 @@ int car_l_x[] = { screen_width * 1/8  - icon_size/2,  screen_width * 3/8 - icon_
 
 bool car_r_pos = true;
 bool car_l_pos = true;
- 
+
+std::string main_windows_title = "welcome to 2CARS :)";
+
+Font * score_font;
+int score = 0;

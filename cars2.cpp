@@ -3,10 +3,8 @@
 #include "consts.h"
 #include "menu.h"
 
-bool car_r_pos = true;
-bool car_l_pos = true;
 
-Texture background,
+Texture background,score_tex,
  car_r_tex, car_l_tex,
   bad_r_tex, bad_l_tex,
    good_r_tex, good_l_tex;
@@ -17,6 +15,16 @@ bool init()
   srand(time(0));
   car_r_pos = rand()%2;
   car_l_pos = rand()%2;
+
+  //  Music*  game_music = SBDL::loadMusic("./assets/Sounds/score.wav");
+  //  SBDL::playMusic(game_music, -1);
+  //Mix_Music *gMusic = NULL;
+//  gMusic = Mix_LoadMUS( "m.wav" );
+//  if( gMusic == NULL )
+//  {
+//    printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+//  }
+
   return true;
 }
 
@@ -48,6 +56,8 @@ bool load_game_texture()
   good_r_tex = SBDL::loadTexture( "assets/Obstacle/BlueCircle.png" );
   good_l_tex = SBDL::loadTexture( "assets/Obstacle/RedCircle.png" );
 
+  score_font = SBDL::loadFont("assets/Font/gobold.ttf",27);
+
   return true;
 }
 
@@ -57,6 +67,8 @@ bool show_game_texture()
   SBDL::showTexture( car_r_tex , car_r_x[car_r_pos] , max_car_height );
   SBDL::showTexture( car_l_tex , car_l_x[car_l_pos] , max_car_height );
 
+	score_tex = SBDL::createFontTexture(score_font , "SCORE : " + std::to_string(score) , 30, 140, 50);
+  SBDL::showTexture( score_tex , 0 ,screen_height - score_tex.height );
   return true;
 }
 
