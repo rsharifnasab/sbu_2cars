@@ -1,4 +1,5 @@
 
+#include <string>
 
 const unsigned short int icon_size   = 60;
 
@@ -25,12 +26,12 @@ Texture music_texture , Texture  no_music_texture )
   return true;
 }
 
-bool menu()
+bool menu(std::string text_title = "welcome to 2CARS :)")
 {
   Texture menu_background = SBDL::loadTexture( "assets/MenuBackground.png" );
 
   Font * welc_font = SBDL::loadFont("assets/Font/gobold.ttf",17);
-  Texture welcome_texture = SBDL::createFontTexture(welc_font , "welcome to 2CARS :)", 100, 240, 33);
+  Texture welcome_texture = SBDL::createFontTexture(welc_font , text_title, 100, 240, 33);
 
   Font * start_font = SBDL::loadFont("assets/Font/gobold.ttf",25);
   Texture start_texture = SBDL::createFontTexture(start_font , "press SPACE to start", 20, 140, 133);
