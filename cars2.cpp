@@ -9,13 +9,30 @@ Texture background,score_tex,
   bad_r_tex, bad_l_tex,
    good_r_tex, good_l_tex;
 
+
+bool init_high_score()
+{
+  std::string HS="";
+  std::ifstream HSS ("high_score.txt");
+  if (HSS.is_open())
+  {
+      getline (HSS,HS);
+      high_score = std::stoi(HS);
+      HSS.close();
+  }
+  else std::cout << "error in opening file\n";
+  return true;
+}
+
 bool init()
 {
-  SBDL::InitEngine ("2CARS Game", screen_width , screen_height);
+  SBDL::InitEngine ("2CARS Game", screen_width, screen_height);
+
   srand(time(0));
   car_r_pos = rand()%2;
   car_l_pos = rand()%2;
 
+  init_high_score();
   //  Music*  game_music = SBDL::loadMusic("./assets/Sounds/score.wav");
   //  SBDL::playMusic(game_music, -1);
   //Mix_Music *gMusic = NULL;
@@ -24,7 +41,6 @@ bool init()
 //  {
 //    printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
 //  }
-
   return true;
 }
 
@@ -68,7 +84,7 @@ bool show_game_texture()
   SBDL::showTexture( car_l_tex , car_l_x[car_l_pos] , max_car_height );
 
 	score_tex = SBDL::createFontTexture(score_font , "SCORE : " + std::to_string(score) , 30, 140, 50);
-  SBDL::showTexture( score_tex , 0 ,screen_height - score_tex.height );
+  SBDL::showTexture( score_tex , screen_width * 0.27 ,screen_height - score_tex.height );
   return true;
 }
 

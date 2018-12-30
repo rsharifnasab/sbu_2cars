@@ -23,3 +23,4 @@ std::string main_windows_title = "welcome to 2CARS :)";
 
 Font * score_font;
 int score = 0;
+int high_score=0;

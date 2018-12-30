@@ -26,7 +26,7 @@ bool show_menu_textures()
   return true;
 }
 
-bool load_menu_textures(std::string text_title)
+bool load_menu_textures(std::string text_title) 
 {
   menu_background = SBDL::loadTexture( "assets/MenuBackground.png" );
 
