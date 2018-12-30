@@ -13,12 +13,12 @@ Texture background,score_tex,
 bool init_high_score()
 {
   std::string HS="";
-  std::ifstream HSS ("high_score.txt");
-  if (HSS.is_open())
+  std::ifstream HS_S ("high_score.txt");
+  if (HS_S.is_open())
   {
-      getline (HSS,HS);
+      getline (HS_S,HS);
       high_score = std::stoi(HS);
-      HSS.close();
+      HS_S.close();
   }
   else std::cout << "error in opening file\n";
   return true;
@@ -26,6 +26,7 @@ bool init_high_score()
 
 bool init()
 {
+
   SBDL::InitEngine ("2CARS Game", screen_width, screen_height);
 
   srand(time(0));
@@ -56,7 +57,6 @@ bool handle_keyboard()
   if (SBDL::keyPressed(SDL_SCANCODE_RIGHT)) car_r_pos = !car_r_pos;
   if (SBDL::keyPressed(SDL_SCANCODE_LEFT))  car_l_pos = !car_l_pos;
   if (SBDL::keyPressed(SDL_SCANCODE_P)) menu("Game Paused");
-
   return true;
 }
 
@@ -73,7 +73,7 @@ bool load_game_texture()
   good_l_tex = SBDL::loadTexture( "assets/Obstacle/RedCircle.png" );
 
   score_font = SBDL::loadFont("assets/Font/gobold.ttf",27);
-
+  // crate score texture moved to show_game_texture becasue of every time change
   return true;
 }
 
@@ -85,6 +85,7 @@ bool show_game_texture()
 
 	score_tex = SBDL::createFontTexture(score_font , "SCORE : " + std::to_string(score) , 30, 140, 50);
   SBDL::showTexture( score_tex , screen_width * 0.27 ,screen_height - score_tex.height );
+
   return true;
 }
 
@@ -98,12 +99,11 @@ bool delay_handle(int start_time)
 
 bool score_handle()
 {
-  const unsigned int ms_max = 200;
   static long int milisec = 0;
   milisec++;
-  if(milisec > ms_max)
+  if(milisec > score_rate)
   {
-    milisec %= ms_max;
+    milisec %= score_rate;
     score++;
     if (score > high_score)
     {
