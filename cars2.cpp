@@ -83,7 +83,7 @@ bool show_game_texture()
   SBDL::showTexture( car_r_tex , car_r_x[car_r_pos] , max_car_height );
   SBDL::showTexture( car_l_tex , car_l_x[car_l_pos] , max_car_height );
 
-	score_tex = SBDL::createFontTexture(score_font , "SCORE : " + std::to_string(score) , 30, 140, 50);
+	score_tex = SBDL::createFontTexture(score_font , "SCORE : " + std::to_string(score) + " HIGHSCORE : " + std::to_string(high_score) , 30, 220, 50);
   SBDL::showTexture( score_tex , screen_width * 0.27 ,screen_height - score_tex.height );
 
   return true;
