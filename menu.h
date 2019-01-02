@@ -26,7 +26,8 @@ bool show_menu_textures()
   return true;
 }
 
-bool load_menu_textures(std::string text_title) 
+
+bool load_menu_textures(std::string text_title)
 {
   menu_background = SBDL::loadTexture( "assets/MenuBackground.png" );
 
@@ -54,6 +55,7 @@ bool load_menu_textures(std::string text_title)
   return true;
 }
 
+
 bool menu(std::string text_title = main_windows_title)
 {
   first_time = text_title == main_windows_title;
@@ -75,7 +77,6 @@ bool menu(std::string text_title = main_windows_title)
         SBDL::stopMusic();
       }
     }
-
     show_menu_textures();
     SBDL::delay(delay_time);
   }

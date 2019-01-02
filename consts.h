@@ -2,7 +2,7 @@ const unsigned int FPS = 60;
 const unsigned int delay_time = 1000 / FPS;
 
 const unsigned int screen_width = 500;
-const unsigned int screen_height = 700;
+const unsigned int screen_height = 650;
 const int max_car_height = screen_height * 0.73;
 
 const unsigned short int icon_size   = 60;

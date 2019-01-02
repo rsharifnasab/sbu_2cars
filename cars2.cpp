@@ -34,14 +34,14 @@ bool init()
   car_l_pos = rand()%2;
 
   init_high_score();
-  //  Music*  game_music = SBDL::loadMusic("./assets/Sounds/score.wav");
-  //  SBDL::playMusic(game_music, -1);
-  //Mix_Music *gMusic = NULL;
-//  gMusic = Mix_LoadMUS( "m.wav" );
-//  if( gMusic == NULL )
-//  {
-//    printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
-//  }
+  Music*  game_music = SBDL::loadMusic("./assets/Sounds/music.wav");
+  SBDL::playMusic(game_music, -1);
+  Mix_Music *gMusic = NULL;
+  gMusic = Mix_LoadMUS( "m.wav" );
+  if( gMusic == NULL )
+  {
+    printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+  }
   return true;
 }
 
