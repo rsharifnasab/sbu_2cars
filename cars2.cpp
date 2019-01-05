@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <exception>
 #include "SBDL.h"
 #include "consts.h"
 #include "menu.h"
@@ -24,6 +25,23 @@ bool init_high_score()
   return true;
 }
 
+
+
+bool init_music()
+{
+  try
+  {
+    Music*  game_music = SBDL::loadMusic("./assets/Sounds/music.wav");
+    SBDL::playMusic(game_music, -1);
+    return true;
+  }
+  catch (int e)
+  {
+    std::cout << "An exception occurred. Exception Nr. " << e << '\n';
+  }
+
+}
+
 bool init()
 {
 
@@ -34,14 +52,8 @@ bool init()
   car_l_pos = rand()%2;
 
   init_high_score();
-  Music*  game_music = SBDL::loadMusic("./assets/Sounds/music.wav");
-  SBDL::playMusic(game_music, -1);
-  Mix_Music *gMusic = NULL;
-  gMusic = Mix_LoadMUS( "m.wav" );
-  if( gMusic == NULL )
-  {
-    printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
-  }
+  //init_music();
+
   return true;
 }
 
