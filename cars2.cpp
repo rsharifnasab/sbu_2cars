@@ -50,6 +50,8 @@ bool init()
   car_r_pos = rand()%2;
   car_l_pos = rand()%2;
 
+  block_turn = (rand()%2)?left:right;
+
   init_high_score();
   init_music();
 
@@ -128,19 +130,56 @@ bool score_handle()
   return true;
 }
 
-bool block_handle()
+bool block_start(obj a)
+{
+  a.y = block_start_point;
+  a.should_eat = rand()%2;
+  a.is_moving = true;
+  a.kind = (rand()%2)?circle:square;
+  return true;
+}
+
+bool new_block_handle()
 {
   static long int milisec = 0;
   milisec++;
   if(milisec > block_rate)
   {
     milisec %= block_rate;
-    
+
+      // TODO
+      if (block_turn == left)
+      {
+        block_start(left_block[left_block_index]);
+        block_turn = right;
+        left_block_index = (left_block_index+1)%3;
+      }
+
+
+      if (block_turn == right)
+      {
+          block_start(right_block[right_block_index]);
+          block_turn = left;
+          right_block_index = (right_block_index+1)%3;
+      }
 
   }
   return true;
 }
 
+
+bool block_move()
+{
+  for(int i=0;i<3;i++)
+  {
+    left_block[i].y += left_block[i].is_moving * block_V;
+    right_block[i].y += left_block[i].is_moving * block_V;
+
+    if(left_block[i].y > screen_height) left_block[i].is_moving = false;
+    if(right_block[i].y > screen_height) left_block[i].is_moving = false;
+  }
+  return true;
+}
 
 
 int main()
@@ -153,8 +192,11 @@ int main()
   {
     unsigned int start_time = SBDL::getTime();
     score_handle();
-    block_handle();
+
     make_game_harder();
+    new_block_handle();
+    block_move();
+
 
     SBDL::updateEvents();
     handle_keyboard();

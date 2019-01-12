@@ -33,17 +33,21 @@ Sound* sound1 = NULL; //TODO
 
 enum obj_pos { left,right };
 enum Kind {circle , square};
+const short int block_start_point = block_start_point;
+
 struct obj
 {
   bool should_eat = true;
   bool is_moving = false;
   obj_pos pos = left;
-  int x = -20;
+  int y = -20;
   Texture tex;
   Kind kind = circle;
 };
+
 obj left_block [3];
 obj right_block [3];
 unsigned short int left_block_index =0 ;
 unsigned short int right_block_index =0 ;
+obj_pos block_turn;
 const unsigned int block_rate = 700;
