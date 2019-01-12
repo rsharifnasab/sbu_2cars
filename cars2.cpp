@@ -29,15 +29,14 @@ bool init_high_score()
 
 bool init_music()
 {
-  try
-  {
-    Music*  game_music = SBDL::loadMusic("./assets/Sounds/music.wav");
-    SBDL::playMusic(game_music, -1);
+  try{
+    game_music = SBDL::loadMusic("./assets/Sounds/music.wav");
+    if(music_state) SBDL::playMusic(game_music, -1);
     return true;
   }
-  catch (int e)
-  {
+  catch (int e){
     std::cout << "An exception occurred. Exception Nr. " << e << '\n';
+    return false;
   }
 
 }
@@ -52,7 +51,7 @@ bool init()
   car_l_pos = rand()%2;
 
   init_high_score();
-  init_music(); //ToDo
+  init_music(); 
 
   return true;
 }

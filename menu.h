@@ -73,8 +73,9 @@ bool menu(std::string text_title = main_windows_title)
       if ( SBDL::mouseInRect( sound_rect ) ) sound_state = !sound_state;
       if ( SBDL::mouseInRect( music_rect ) )
       {
+        if (music_state) SBDL::stopMusic();
+        else SBDL::playMusic(game_music, -1);
         music_state = !music_state;
-        SBDL::stopMusic();
       }
     }
     show_menu_textures();
