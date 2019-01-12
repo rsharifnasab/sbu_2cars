@@ -52,7 +52,7 @@ bool init()
   car_l_pos = rand()%2;
 
   init_high_score();
-  //init_music(); TODO
+  init_music(); //ToDo
 
   return true;
 }
