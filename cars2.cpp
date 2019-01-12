@@ -52,7 +52,7 @@ bool init()
   car_l_pos = rand()%2;
 
   init_high_score();
-  //init_music();
+  //init_music(); TODO
 
   return true;
 }
@@ -85,7 +85,7 @@ bool load_game_texture()
   good_l_tex = SBDL::loadTexture( "assets/Obstacle/RedCircle.png" );
 
   score_font = SBDL::loadFont("assets/Font/gobold.ttf",27);
-  // crate score texture moved to show_game_texture becasue of every time change
+  // create score texture moved to show_game_texture becasue of every time change
   return true;
 }
 
