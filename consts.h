@@ -38,6 +38,12 @@ struct obj
   bool should_eat = true;
   bool is_moving = false;
   obj_pos pos = left;
+  int x = -20;
   Texture tex;
   Kind kind = circle;
 };
+obj left_block [3];
+obj right_block [3];
+unsigned short int left_block_index =0 ;
+unsigned short int right_block_index =0 ;
+const unsigned int block_rate = 700;

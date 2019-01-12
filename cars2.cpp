@@ -51,7 +51,7 @@ bool init()
   car_l_pos = rand()%2;
 
   init_high_score();
-  init_music(); 
+  init_music();
 
   return true;
 }
@@ -128,6 +128,21 @@ bool score_handle()
   return true;
 }
 
+bool block_handle()
+{
+  static long int milisec = 0;
+  milisec++;
+  if(milisec > block_rate)
+  {
+    milisec %= block_rate;
+    
+
+  }
+  return true;
+}
+
+
+
 int main()
 {
   init();
@@ -138,6 +153,7 @@ int main()
   {
     unsigned int start_time = SBDL::getTime();
     score_handle();
+    block_handle();
     make_game_harder();
 
     SBDL::updateEvents();
