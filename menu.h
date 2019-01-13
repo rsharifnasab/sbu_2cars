@@ -31,7 +31,7 @@ bool load_menu_textures(std::string text_title)
 {
   menu_background = SBDL::loadTexture( "assets/MenuBackground.png" );
 
-  Font * welc_font = SBDL::loadFont("assets/Font/gobold.ttf",17);
+  Font * welc_font = SBDL::loadFont("assets/Font/gobold.ttf",32);
   welcome_texture = SBDL::createFontTexture(welc_font , text_title, 100, 240, 33);
 
   Font * start_font = SBDL::loadFont("assets/Font/gobold.ttf",25);
@@ -48,7 +48,7 @@ bool load_menu_textures(std::string text_title)
   play_texture = SBDL::loadTexture( "assets/Button/Play.png" );
   play_rect = { screen_width - icon_size , screen_height - icon_size , icon_size , icon_size };
 
-  Font * menu_score_font = SBDL::loadFont("assets/Font/gobold.ttf",25);
+  Font * menu_score_font = SBDL::loadFont("assets/Font/gobold.ttf",35);
   menu_score_tex = SBDL::createFontTexture(menu_score_font , "SCORE : " + std::to_string(score) + " HIGHSCORE : " + std::to_string(high_score) , 30, 220, 50);
 
 
@@ -83,6 +83,10 @@ bool new_game(std::string text_title)
 }
 
 
+
+//  Sound *sound = SBDL::loadSound("assets/Sounds/score.wav");
+//  SBDL::playSound(sound, 1); //todo
+
 bool menu(std::string text_title = main_windows_title)
 {
   first_time = (text_title == main_windows_title);
@@ -97,7 +101,7 @@ bool menu(std::string text_title = main_windows_title)
     if (SBDL::Mouse.clicked())
     {
       if ( SBDL::mouseInRect( play_rect ) ) {new_game(text_title); return true;}
-      if ( SBDL::mouseInRect( sound_rect ) ) sound_state = !sound_state;
+      if ( SBDL::mouseInRect( sound_rect ) ) sound_state = !sound_state;;
       if ( SBDL::mouseInRect( music_rect ) ) change_music();
     }
     show_menu_textures();

@@ -30,6 +30,9 @@ bool init_music()
   try{
     game_music = SBDL::loadMusic("./assets/Sounds/music.wav");
     if(music_state) SBDL::playMusic(game_music, -1);
+    score_sound = SBDL::loadSound("assets/Sounds/score.wav");
+    die1_sound = SBDL::loadSound("assets/Sounds/die1.wav");
+    die2_sound = SBDL::loadSound("assets/Sounds/die2.wav");
     return true;
   }
   catch (int e){
@@ -158,6 +161,7 @@ bool init_block(obj& a,obj_pos pos)
 
 bool kill_block(obj& a)
 {
+  if(a.should_eat && sound_state)  SBDL::playSound(score_sound, 1);
   a.is_moving = false;
   a.y = block_start_point;
   return true;
@@ -212,9 +216,10 @@ bool hit_check()
           if ( SBDL::hasIntersectionRect( right_block_rect,car_r_rect ) )
           {
             if (right_block[i].should_eat) kill_block(right_block[i]);
-            else menu(Game_Over);
+            else { SBDL::playSound(die1_sound, 1); menu(Game_Over);}
           }
-          if(right_block[i].y > screen_height && right_block[i].should_eat) menu(Game_Over);
+          if(right_block[i].y > screen_height && right_block[i].should_eat)
+          {SBDL::playSound(die2_sound, 2); menu(Game_Over);}
       }
       if(left_block[i].is_moving)
       {
@@ -222,9 +227,10 @@ bool hit_check()
           if ( SBDL::hasIntersectionRect( left_block_rect,car_l_rect ) )
           {
             if (left_block[i].should_eat) kill_block(left_block[i]);
-            else menu(Game_Over);
+            else { SBDL::playSound(die1_sound, 1); menu(Game_Over);}
           }
-          if(left_block[i].y > screen_height && left_block[i].should_eat) menu(Game_Over);
+          if(left_block[i].y > screen_height && left_block[i].should_eat)
+          {SBDL::playSound(die2_sound, 2); menu(Game_Over);}
       }
   }
   return true;
