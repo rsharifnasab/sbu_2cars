@@ -4,7 +4,6 @@
 #include "consts.h"
 #include "menu.h"
 
-
 Texture background,score_tex,
  car_r_tex, car_l_tex,
   bad_r_tex, bad_l_tex,
@@ -26,7 +25,6 @@ bool init_high_score()
 }
 
 
-
 bool init_music()
 {
   try{
@@ -43,7 +41,6 @@ bool init_music()
 
 bool init()
 {
-
   SBDL::InitEngine ("2CARS Game", screen_width, screen_height);
   srand(time(0));
 
@@ -57,7 +54,6 @@ bool init()
 
   return true;
 }
-
 
 
 bool handle_keyboard()
@@ -135,11 +131,19 @@ bool score_handle()
   return true;
 }
 
-bool block_start(obj& a,obj_pos pos)
+
+bool kind_rand()
+{
+  short int r = rand()%11;
+  if (r<4) return false;
+  return true;
+}
+
+bool init_block(obj& a,obj_pos pos)
 {
   if (a.is_moving) return false;
   a.y = block_start_point;
-  a.should_eat = rand()%2;
+  a.should_eat = kind_rand();
   a.pos = (rand()%2==1) ? left : right;
   a.is_moving = true;
 
@@ -154,7 +158,7 @@ bool block_start(obj& a,obj_pos pos)
   return true;
 }
 
-bool new_block_handle()
+bool new_block()
 {
   static long int milisec = 0;
   milisec++;
@@ -162,13 +166,13 @@ bool new_block_handle()
   milisec %= block_rate;
   if (block_turn == left)
   {
-    block_start(left_block[left_block_index],left);
+    init_block(left_block[left_block_index],left);
     block_turn = right;
     left_block_index = (left_block_index+1)%3;
   }
   else
   {
-    block_start(right_block[right_block_index],right);
+    init_block(right_block[right_block_index],right);
     block_turn = left;
     right_block_index = (right_block_index+1)%3;
   }
@@ -203,7 +207,7 @@ int main()
     unsigned int start_time = SBDL::getTime();
     score_handle();
 
-    new_block_handle();
+    new_block();
     block_move();
 
     SBDL::updateEvents();

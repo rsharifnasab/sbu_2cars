@@ -49,11 +49,18 @@ bool load_menu_textures(std::string text_title)
   play_rect = { screen_width - icon_size , screen_height - icon_size , icon_size , icon_size };
 
   Font * menu_score_font = SBDL::loadFont("assets/Font/gobold.ttf",25);
-  //menu_score_tex = SBDL::createFontTexture(menu_score_font , "SCORE : " + std::to_string(score) , 30, 140, 50); //TODO
   menu_score_tex = SBDL::createFontTexture(menu_score_font , "SCORE : " + std::to_string(score) + " HIGHSCORE : " + std::to_string(high_score) , 30, 220, 50);
 
 
   return true;
+}
+
+bool change_music()
+{
+    if (music_state) SBDL::stopMusic();
+    else SBDL::playMusic(game_music, -1);
+    music_state = !music_state;
+    return true;
 }
 
 
@@ -72,12 +79,7 @@ bool menu(std::string text_title = main_windows_title)
     {
       if ( SBDL::mouseInRect( play_rect ) ) return true;
       if ( SBDL::mouseInRect( sound_rect ) ) sound_state = !sound_state;
-      if ( SBDL::mouseInRect( music_rect ) )
-      {
-        if (music_state) SBDL::stopMusic();
-        else SBDL::playMusic(game_music, -1);
-        music_state = !music_state;
-      }
+      if ( SBDL::mouseInRect( music_rect ) ) change_music();
     }
     show_menu_textures();
     SBDL::delay(delay_time);

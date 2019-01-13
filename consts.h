@@ -48,4 +48,4 @@ obj right_block [3];
 unsigned short int left_block_index =0 ;
 unsigned short int right_block_index =0 ;
 obj_pos block_turn= right;
-const unsigned int block_rate = 150; //TODO
+const unsigned int block_rate = 60; //TODO
