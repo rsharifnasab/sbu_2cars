@@ -105,7 +105,7 @@ bool menu(std::string text_title = main_windows_title)
       if ( SBDL::mouseInRect( music_rect ) ) change_music();
     }
     show_menu_textures();
-    SBDL::delay(delay_time);
+    SBDL::delay(1000/main_FPS);
   }
   return true;
 }

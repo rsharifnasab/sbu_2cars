@@ -1,6 +1,5 @@
-const unsigned int main_FPS = 40;
+const unsigned int main_FPS = 45;
 unsigned int FPS = main_FPS;
-const unsigned int delay_time = 1000 / FPS;
 
 const int screen_width = 500;
 const int screen_height = 750;
@@ -8,8 +7,8 @@ const int max_car_height = screen_height * 0.73;
 
 const unsigned short int icon_size   = 60;
 
-const double harder = 1;
-const unsigned int block_V = 5;
+const unsigned short int harder = 5;
+const unsigned int block_V = 4;
 
 
 
@@ -30,14 +29,13 @@ Font * score_font = NULL;
 int score = 0;
 int high_score=0;
 
-Music*  game_music = NULL;
+Music *game_music = NULL;
 Sound *score_sound = NULL;
 Sound *die1_sound = NULL;
 Sound *die2_sound = NULL;
 
 
-
-
+enum sound_type { score_s, die1_s, die2_s };
 enum obj_pos { left,right };
 enum Kind {circle , square};
 const short int block_start_point = 20;

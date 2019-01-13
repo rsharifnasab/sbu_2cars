@@ -105,20 +105,18 @@ bool show_game_texture()
 
 bool delay_handle(int start_time)
 {
+    unsigned int delay_time = 1000 / FPS;
     unsigned int loop_time = SBDL::getTime() - start_time;
+
   	if ( loop_time < delay_time )
 		  SBDL::delay( delay_time - loop_time );
     return true;
 }
 
-bool score_handle()
+bool score_add()
 {
-  static long int milisec = 0;
-  milisec++;
-  if(milisec > score_rate)
-  {
-    milisec %= score_rate;
     score++;
+    FPS += harder ; //todo
     if (score > high_score)
     {
       high_score = score;
@@ -127,8 +125,6 @@ bool score_handle()
       myfile << high_score << "\n";
       myfile.close();
     }
-    FPS += harder ; //todo
-  }
   return true;
 }
 
@@ -162,6 +158,7 @@ bool init_block(obj& a,obj_pos pos)
 bool kill_block(obj& a)
 {
   if(a.should_eat && sound_state)  SBDL::playSound(score_sound, 1);
+  if(a.should_eat) score_add();
   a.is_moving = false;
   a.y = block_start_point;
   return true;
@@ -203,6 +200,15 @@ bool block_move()
   return true;
 }
 
+bool play_sound(sound_type s)
+{
+    if(!sound_state) return false;
+    if (s == score_s) SBDL::playSound(score_sound,1);
+    if (s == die1_s) SBDL::playSound(die1_sound,1);
+    if (s == die2_s) SBDL::playSound(die2_sound,1);
+    return true;
+}
+
 bool hit_check()
 {
   SDL_Rect car_r_rect = { car_r_x[car_r_pos] ,  max_car_height , car_r_tex.width , car_r_tex.height };
@@ -216,10 +222,10 @@ bool hit_check()
           if ( SBDL::hasIntersectionRect( right_block_rect,car_r_rect ) )
           {
             if (right_block[i].should_eat) kill_block(right_block[i]);
-            else { SBDL::playSound(die1_sound, 1); menu(Game_Over);}
+            else { play_sound(die1_s); menu(Game_Over); }
           }
           if(right_block[i].y > screen_height && right_block[i].should_eat)
-          {SBDL::playSound(die2_sound, 2); menu(Game_Over);}
+            { play_sound(die2_s); menu(Game_Over); }
       }
       if(left_block[i].is_moving)
       {
@@ -227,10 +233,10 @@ bool hit_check()
           if ( SBDL::hasIntersectionRect( left_block_rect,car_l_rect ) )
           {
             if (left_block[i].should_eat) kill_block(left_block[i]);
-            else { SBDL::playSound(die1_sound, 1); menu(Game_Over);}
+            else { play_sound(die1_s); menu(Game_Over); }
           }
           if(left_block[i].y > screen_height && left_block[i].should_eat)
-          {SBDL::playSound(die2_sound, 2); menu(Game_Over);}
+            { play_sound(die2_s); menu(Game_Over); }
       }
   }
   return true;
@@ -246,7 +252,6 @@ int main()
   while( SBDL::isRunning() )
   {
     unsigned int start_time = SBDL::getTime();
-    score_handle();
 
     new_block();
     block_move();
