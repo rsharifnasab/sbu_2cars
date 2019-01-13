@@ -1,4 +1,4 @@
-const unsigned int FPS = 60;
+const unsigned int FPS = 100;
 const unsigned int delay_time = 1000 / FPS;
 
 const unsigned int screen_width = 500;
@@ -7,8 +7,8 @@ const int max_car_height = screen_height * 0.73;
 
 const unsigned short int icon_size   = 60;
 
-const double harder = 1.0001;
-unsigned int block_V = 3;
+const double harder = -1;
+const unsigned int block_V = 2;
 
 
 
@@ -33,21 +33,19 @@ Sound* sound1 = NULL; //TODO
 
 enum obj_pos { left,right };
 enum Kind {circle , square};
-const short int block_start_point = block_start_point;
-
+const short int block_start_point = 20;
 struct obj
 {
   bool should_eat = true;
   bool is_moving = false;
   obj_pos pos = left;
-  int y = -20;
-  Texture tex;
-  Kind kind = circle;
+  int y = block_start_point;
+  Texture* tex;
 };
 
 obj left_block [3];
 obj right_block [3];
 unsigned short int left_block_index =0 ;
 unsigned short int right_block_index =0 ;
-obj_pos block_turn;
-const unsigned int block_rate = 700;
+obj_pos block_turn= right;
+const unsigned int block_rate = 150; //TODO

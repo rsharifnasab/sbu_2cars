@@ -45,12 +45,12 @@ bool init()
 {
 
   SBDL::InitEngine ("2CARS Game", screen_width, screen_height);
-
   srand(time(0));
+
   car_r_pos = rand()%2;
   car_l_pos = rand()%2;
 
-  block_turn = (rand()%2)?left:right;
+  block_turn = (rand()%2 == 0)?left:right;
 
   init_high_score();
   init_music();
@@ -58,11 +58,6 @@ bool init()
   return true;
 }
 
-bool make_game_harder()
-{
-  block_V *= harder ;
-  return true;
-}
 
 
 bool handle_keyboard()
@@ -96,8 +91,22 @@ bool show_game_texture()
   SBDL::showTexture( car_r_tex , car_r_x[car_r_pos] , max_car_height );
   SBDL::showTexture( car_l_tex , car_l_x[car_l_pos] , max_car_height );
 
+
+  for (unsigned short i = 0; i < 3; i++)
+  {
+    if(right_block[i].is_moving)
+        SBDL::showTexture( *(right_block[i].tex) , car_r_x[left_block[i].pos] , right_block[i].y );
+    if(left_block[i].is_moving)
+      SBDL::showTexture( *(left_block[i].tex) , car_l_x[left_block[i].pos] , left_block[i].y );
+  //  SBDL::showTexture( good_l_tex , car_l_x[left_block[i].pos] , left_block[i].y );
+//    SBDL::showTexture( good_r_tex , car_r_x[left_block[i].pos] , right_block[i].y );
+  }
+
+
 	score_tex = SBDL::createFontTexture(score_font , "SCORE : " + std::to_string(score) + " HIGHSCORE : " + std::to_string(high_score) , 30, 220, 50);
   SBDL::showTexture( score_tex , screen_width * 0.27 ,screen_height - score_tex.height );
+
+
 
   return true;
 }
@@ -126,16 +135,33 @@ bool score_handle()
       myfile << high_score << "\n";
       myfile.close();
     }
+
+  //  block_rate -= harder ; todo
+
   }
   return true;
 }
 
-bool block_start(obj a)
+bool block_start(obj& a,obj_pos pos)
 {
+  if (a.is_moving) return false;
   a.y = block_start_point;
   a.should_eat = rand()%2;
+  a.pos = (rand()%2==1) ? left : right;
   a.is_moving = true;
-  a.kind = (rand()%2)?circle:square;
+
+  if(a.should_eat)
+  {
+    if(pos == right) a.tex = &good_r_tex;
+    else  a.tex = &good_l_tex;
+  }
+  else
+  {
+    if(pos == right) a.tex = &bad_r_tex;
+    else  a.tex = &bad_l_tex;
+  }
+
+
   return true;
 }
 
@@ -143,27 +169,23 @@ bool new_block_handle()
 {
   static long int milisec = 0;
   milisec++;
-  if(milisec > block_rate)
+  if(milisec < block_rate) return false;
+
+  milisec %= block_rate;
+
+  if (block_turn == left)
   {
-    milisec %= block_rate;
-
-      // TODO
-      if (block_turn == left)
-      {
-        block_start(left_block[left_block_index]);
-        block_turn = right;
-        left_block_index = (left_block_index+1)%3;
-      }
-
-
-      if (block_turn == right)
-      {
-          block_start(right_block[right_block_index]);
-          block_turn = left;
-          right_block_index = (right_block_index+1)%3;
-      }
-
+    block_start(left_block[left_block_index],left);
+    block_turn = right;
+    left_block_index = (left_block_index+1)%3;
   }
+  else
+  {
+    block_start(right_block[right_block_index],right);
+    block_turn = left;
+    right_block_index = (right_block_index+1)%3;
+  }
+
   return true;
 }
 
@@ -172,12 +194,15 @@ bool block_move()
 {
   for(int i=0;i<3;i++)
   {
-    left_block[i].y += left_block[i].is_moving * block_V;
-    right_block[i].y += left_block[i].is_moving * block_V;
+    left_block[i].y += (left_block[i].is_moving * block_V);
+    right_block[i].y += (right_block[i].is_moving * block_V);
 
     if(left_block[i].y > screen_height) left_block[i].is_moving = false;
-    if(right_block[i].y > screen_height) left_block[i].is_moving = false;
+    if(right_block[i].y > screen_height) right_block[i].is_moving = false;
+
   }
+
+
   return true;
 }
 
@@ -190,18 +215,18 @@ int main()
 
   while( SBDL::isRunning() )
   {
+
     unsigned int start_time = SBDL::getTime();
     score_handle();
 
-    make_game_harder();
     new_block_handle();
     block_move();
-
 
     SBDL::updateEvents();
     handle_keyboard();
 
     show_game_texture();
+
     SBDL::updateRenderScreen();
     delay_handle(start_time);
 }

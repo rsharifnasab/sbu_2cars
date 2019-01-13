@@ -49,7 +49,7 @@ bool load_menu_textures(std::string text_title)
   play_rect = { screen_width - icon_size , screen_height - icon_size , icon_size , icon_size };
 
   Font * menu_score_font = SBDL::loadFont("assets/Font/gobold.ttf",25);
-  menu_score_tex = SBDL::createFontTexture(menu_score_font , "SCORE : " + std::to_string(score) , 30, 140, 50);
+  menu_score_tex = SBDL::createFontTexture(menu_score_font , "SCORE : " + std::to_string(score) , 30, 140, 50); //TODO
 
 
   return true;
