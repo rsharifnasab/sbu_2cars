@@ -36,7 +36,6 @@ bool init_music()
     std::cout << "An exception occurred. Exception Nr. " << e << '\n';
     return false;
   }
-
 }
 
 bool init()
@@ -125,7 +124,6 @@ bool score_handle()
       myfile << high_score << "\n";
       myfile.close();
     }
-
     FPS += harder ; //todo
   }
   return true;
@@ -158,15 +156,12 @@ bool init_block(obj& a,obj_pos pos)
   return true;
 }
 
-
-
 bool kill_block(obj& a)
 {
   a.is_moving = false;
   a.y = block_start_point;
   return true;
 }
-
 
 
 bool new_block()
