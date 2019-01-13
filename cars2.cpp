@@ -219,7 +219,7 @@ bool hit_check()
             if (right_block[i].should_eat) kill_block(right_block[i]);
             else menu(Game_Over);
           }
-          if(right_block[i].y > screen_height && left_block[i].should_eat) menu(Game_Over);
+          if(right_block[i].y > screen_height && right_block[i].should_eat) menu(Game_Over);
       }
       if(left_block[i].is_moving)
       {

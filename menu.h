@@ -63,8 +63,9 @@ bool change_music()
     return true;
 }
 
-bool new_game()
+bool new_game(std::string text_title)
 {
+  if(text_title != Game_Over) return false;
   score = 0;
   FPS = main_FPS;
   for(int i=0;i<3;i++)
@@ -92,10 +93,10 @@ bool menu(std::string text_title = main_windows_title)
   {
     SBDL::updateEvents();
 
-    if (SBDL::keyHeld(SDL_SCANCODE_SPACE)) {new_game(); return true;}
+    if (SBDL::keyHeld(SDL_SCANCODE_SPACE)) {new_game(text_title); return true;}
     if (SBDL::Mouse.clicked())
     {
-      if ( SBDL::mouseInRect( play_rect ) ) {new_game(); return true;}
+      if ( SBDL::mouseInRect( play_rect ) ) {new_game(text_title); return true;}
       if ( SBDL::mouseInRect( sound_rect ) ) sound_state = !sound_state;
       if ( SBDL::mouseInRect( music_rect ) ) change_music();
     }
