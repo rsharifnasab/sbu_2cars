@@ -63,10 +63,28 @@ bool change_music()
     return true;
 }
 
+bool new_game()
+{
+  score = 0;
+  FPS = main_FPS;
+  for(int i=0;i<3;i++)
+  {
+    left_block[i].is_moving = false;
+    left_block[i].y = block_start_point;
+    right_block[i].is_moving = false;
+    right_block[i].y = block_start_point;
+  }
+  car_r_pos = rand()%2;
+  car_l_pos = rand()%2;
+  block_turn = (rand()%2 == 0)?left:right;
+
+  return true;
+}
+
 
 bool menu(std::string text_title = main_windows_title)
 {
-  first_time = text_title == main_windows_title;
+  first_time = (text_title == main_windows_title);
   load_menu_textures(text_title);
   show_menu_textures();
 
@@ -74,10 +92,10 @@ bool menu(std::string text_title = main_windows_title)
   {
     SBDL::updateEvents();
 
-    if (SBDL::keyHeld(SDL_SCANCODE_SPACE)) return true;
+    if (SBDL::keyHeld(SDL_SCANCODE_SPACE)) {new_game(); return true;}
     if (SBDL::Mouse.clicked())
     {
-      if ( SBDL::mouseInRect( play_rect ) ) return true;
+      if ( SBDL::mouseInRect( play_rect ) ) {new_game(); return true;}
       if ( SBDL::mouseInRect( sound_rect ) ) sound_state = !sound_state;
       if ( SBDL::mouseInRect( music_rect ) ) change_music();
     }

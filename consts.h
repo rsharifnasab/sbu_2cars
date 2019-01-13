@@ -1,4 +1,5 @@
-unsigned int FPS = 40;
+const unsigned int main_FPS = 40;
+unsigned int FPS = main_FPS;
 const unsigned int delay_time = 1000 / FPS;
 
 const unsigned int screen_width = 500;
@@ -22,6 +23,7 @@ bool car_r_pos = true;
 bool car_l_pos = true;
 
 std::string main_windows_title = "welcome to 2CARS :)";
+std::string Game_Over = "Game Over";
 
 const unsigned int score_rate = 200;
 Font * score_font = NULL;

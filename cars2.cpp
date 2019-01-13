@@ -158,6 +158,17 @@ bool init_block(obj& a,obj_pos pos)
   return true;
 }
 
+
+
+bool kill_block(obj& a)
+{
+  a.is_moving = false;
+  a.y = block_start_point;
+  return true;
+}
+
+
+
 bool new_block()
 {
   static long int milisec = 0;
@@ -187,11 +198,40 @@ bool block_move()
     left_block[i].y += (left_block[i].is_moving * block_V);
     right_block[i].y += (right_block[i].is_moving * block_V);
 
-    if(left_block[i].y > screen_height) left_block[i].is_moving = false;
-    if(right_block[i].y > screen_height) right_block[i].is_moving = false;
+    if(left_block[i].y > screen_height+icon_size) left_block[i].is_moving = false;
+    if(right_block[i].y > screen_height+icon_size) right_block[i].is_moving = false;
   }
+  return true;
+}
 
+bool hit_check()
+{
+  SDL_Rect car_r_rect = { car_r_x[car_r_pos] ,  max_car_height , car_r_tex.width , car_r_tex.height };
+  SDL_Rect car_l_rect = { car_l_x[car_l_pos] ,  max_car_height , car_l_tex.width , car_l_tex.height };
 
+    for (unsigned short i = 0; i < 3; i++)
+    {
+      if(right_block[i].is_moving)
+      {
+          SDL_Rect right_block_rect = { car_r_x[right_block[i].pos] ,  right_block[i].y , icon_size , icon_size  };
+          if ( SBDL::hasIntersectionRect( right_block_rect,car_r_rect ) )
+          {
+            if (right_block[i].should_eat) kill_block(right_block[i]);
+            else menu(Game_Over);
+          }
+          if(right_block[i].y > screen_height && left_block[i].should_eat) menu(Game_Over);
+      }
+      if(left_block[i].is_moving)
+      {
+          SDL_Rect left_block_rect = { car_l_x[left_block[i].pos] ,  left_block[i].y , icon_size , icon_size  };
+          if ( SBDL::hasIntersectionRect( left_block_rect,car_l_rect ) )
+          {
+            if (left_block[i].should_eat) kill_block(left_block[i]);
+            else menu(Game_Over);
+          }
+          if(left_block[i].y > screen_height && left_block[i].should_eat) menu(Game_Over);
+      }
+  }
   return true;
 }
 
@@ -209,6 +249,7 @@ int main()
 
     new_block();
     block_move();
+    hit_check();
 
     SBDL::updateEvents();
     handle_keyboard();
