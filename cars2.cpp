@@ -89,10 +89,9 @@ bool show_game_texture()
 {
   SBDL::showTexture( background , 0 , 0 );
 
-  for (unsigned short i = 0; i < 3; i++)
-  {
+  for (unsigned short i = 0; i < 3; i++){
     if(right_block[i].is_moving)
-        SBDL::showTexture( *(right_block[i].tex) , car_r_x[left_block[i].pos] , right_block[i].y );
+        SBDL::showTexture( *(right_block[i].tex) , car_r_x[right_block[i].pos] , right_block[i].y );
     if(left_block[i].is_moving)
       SBDL::showTexture( *(left_block[i].tex) , car_l_x[left_block[i].pos] , left_block[i].y );
   }
@@ -102,8 +101,6 @@ bool show_game_texture()
 
 	score_tex = SBDL::createFontTexture(score_font , "SCORE : " + std::to_string(score) + " HIGHSCORE : " + std::to_string(high_score) , 30, 220, 50);
   SBDL::showTexture( score_tex , screen_width * 0.27 ,screen_height - score_tex.height );
-
-
 
   return true;
 }
@@ -134,7 +131,6 @@ bool score_handle()
     }
 
     FPS += harder ; //todo
-
   }
   return true;
 }
@@ -147,18 +143,14 @@ bool block_start(obj& a,obj_pos pos)
   a.pos = (rand()%2==1) ? left : right;
   a.is_moving = true;
 
-  if(a.should_eat)
-  {
+  if(a.should_eat){
     if(pos == right) a.tex = &good_r_tex;
     else  a.tex = &good_l_tex;
   }
-  else
-  {
+  else{
     if(pos == right) a.tex = &bad_r_tex;
     else  a.tex = &bad_l_tex;
   }
-
-
   return true;
 }
 
@@ -167,9 +159,7 @@ bool new_block_handle()
   static long int milisec = 0;
   milisec++;
   if(milisec < block_rate) return false;
-
   milisec %= block_rate;
-
   if (block_turn == left)
   {
     block_start(left_block[left_block_index],left);
@@ -182,7 +172,6 @@ bool new_block_handle()
     block_turn = left;
     right_block_index = (right_block_index+1)%3;
   }
-
   return true;
 }
 
@@ -196,7 +185,6 @@ bool block_move()
 
     if(left_block[i].y > screen_height) left_block[i].is_moving = false;
     if(right_block[i].y > screen_height) right_block[i].is_moving = false;
-
   }
 
 
@@ -212,7 +200,6 @@ int main()
 
   while( SBDL::isRunning() )
   {
-
     unsigned int start_time = SBDL::getTime();
     score_handle();
 
@@ -223,7 +210,6 @@ int main()
     handle_keyboard();
 
     show_game_texture();
-
     SBDL::updateRenderScreen();
     delay_handle(start_time);
 }
