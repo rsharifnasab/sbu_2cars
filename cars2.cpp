@@ -88,9 +88,6 @@ bool load_game_texture()
 bool show_game_texture()
 {
   SBDL::showTexture( background , 0 , 0 );
-  SBDL::showTexture( car_r_tex , car_r_x[car_r_pos] , max_car_height );
-  SBDL::showTexture( car_l_tex , car_l_x[car_l_pos] , max_car_height );
-
 
   for (unsigned short i = 0; i < 3; i++)
   {
@@ -98,10 +95,10 @@ bool show_game_texture()
         SBDL::showTexture( *(right_block[i].tex) , car_r_x[left_block[i].pos] , right_block[i].y );
     if(left_block[i].is_moving)
       SBDL::showTexture( *(left_block[i].tex) , car_l_x[left_block[i].pos] , left_block[i].y );
-  //  SBDL::showTexture( good_l_tex , car_l_x[left_block[i].pos] , left_block[i].y );
-//    SBDL::showTexture( good_r_tex , car_r_x[left_block[i].pos] , right_block[i].y );
   }
 
+  SBDL::showTexture( car_r_tex , car_r_x[car_r_pos] , max_car_height );
+  SBDL::showTexture( car_l_tex , car_l_x[car_l_pos] , max_car_height );
 
 	score_tex = SBDL::createFontTexture(score_font , "SCORE : " + std::to_string(score) + " HIGHSCORE : " + std::to_string(high_score) , 30, 220, 50);
   SBDL::showTexture( score_tex , screen_width * 0.27 ,screen_height - score_tex.height );
@@ -136,7 +133,7 @@ bool score_handle()
       myfile.close();
     }
 
-  //  block_rate -= harder ; todo
+    FPS += harder ; //todo
 
   }
   return true;
