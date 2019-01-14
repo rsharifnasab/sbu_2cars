@@ -83,10 +83,6 @@ bool new_game(std::string text_title)
 }
 
 
-
-//  Sound *sound = SBDL::loadSound("assets/Sounds/score.wav");
-//  SBDL::playSound(sound, 1); //todo
-
 bool menu(std::string text_title = main_windows_title)
 {
   first_time = (text_title == main_windows_title);
